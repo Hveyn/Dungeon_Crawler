@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,17 +7,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject playerCursor;
     [SerializeField] private GameObject pointRotation;
     [SerializeField] private GameObject weapon;
-
+    
     private Rigidbody2D _rb;
     private Vector2 _moveDirection;
     private SpriteRenderer _rend;
     private Vector2 _mousePosition;
     private bool _flipWeapon = false;
+    private bool _isRun;
+    private Animator _animator;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _rend = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -31,19 +35,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void InputProcess()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        
-        _moveDirection = new Vector2(moveX, moveY).normalized;
-        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float horizontalMove = Input.GetAxisRaw("Horizontal");
+        float verticalMove = Input.GetAxisRaw("Vertical");
 
+        _animator.SetFloat("speed", math.abs(horizontalMove)+math.abs(verticalMove));
+
+        _moveDirection = new Vector2(horizontalMove, verticalMove).normalized;
+        _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
        
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void Move()
     {
         _rb.velocity = new Vector2(_moveDirection.x * moveSpeed, _moveDirection.y * moveSpeed);
-
+        
+        
         //Rotate sprite character
         if (_mousePosition.x < _rb.position.x)
         {
@@ -59,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
 
         pointRotation.transform.localRotation = Quaternion.Euler(0, 0, aimAngle);
-
+        
 
         if (_flipWeapon)
         {
