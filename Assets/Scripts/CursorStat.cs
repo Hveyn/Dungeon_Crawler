@@ -21,7 +21,15 @@ public class CursorStat : MonoBehaviour
         // Position cursor is mousePosition
         _cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = _cursorPos;
-        _rend.sprite = cursors[selectedCursor];
-        
+
+        if (selectedCursor >= cursors.Length)
+        {
+            _rend.sprite = cursors[0];
+            Debug.Log("Выход за количество курсоров");
+        }
+        else
+        {
+            _rend.sprite = cursors[selectedCursor];
+        }
     }
 }
