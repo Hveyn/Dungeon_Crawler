@@ -40,14 +40,14 @@ public class Weapon : MonoBehaviour
         float anglePointRotation = pointRotation.transform.eulerAngles.z;
         if (_isFlipWeapon)
         {
-            if (anglePointRotation <= 330 && anglePointRotation >= 200)
+            if (!player.GetComponent<SpriteRenderer>().flipX)
             {
                 _isFlipWeapon = false;
             }
         }
         else
         {
-            if (anglePointRotation >= 20f && anglePointRotation <= 160f)
+            if (player.GetComponent<SpriteRenderer>().flipX)
             {
                 _isFlipWeapon = true;
             }
