@@ -7,7 +7,7 @@ public class SimpleRandomWalkDungeonGeneratop : AbstractDungeonGenerator
 {
     [SerializeField] 
     protected SimpleRandomWalkSO randomWalkParametrs;
-
+    
     protected override void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPosition = RunRandomWalk(randomWalkParametrs, startPosition);

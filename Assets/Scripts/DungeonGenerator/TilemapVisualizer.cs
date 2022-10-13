@@ -11,7 +11,7 @@ public class TilemapVisualizer : MonoBehaviour
     private Tilemap floorTilemap, wallTilemap;
     [SerializeField]
     private TileBase floorTile, wallTop, wallOnTop, wallSideRight, wallSideLeft, wallBottom, wallFull,
-        wallInnerCornerDownLeft, wallInnerCornerDownRight,
+        wallInnerCornerDownLeft, wallInnerCornerDownRight, wallInnerCornerUpLeft, wallInnerCornerUpRight,
         wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft;
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
@@ -70,6 +70,8 @@ public class TilemapVisualizer : MonoBehaviour
         {
             tile = wallFull;
         }
+        
+        
 
         if (tile != null)
         {
@@ -77,15 +79,11 @@ public class TilemapVisualizer : MonoBehaviour
             {
                 PaintTopTile(wallTilemap, tile, wallOnTop, position);
             }
-            else if (tile == wallBottom)
+            else
             {
                 Vector2Int pos = position;
                 pos.y += 1;
                 PaintSingleTile(wallTilemap, tile, pos);
-            }
-            else
-            {
-                PaintSingleTile(wallTilemap, tile, position);
             }
         }
     }
@@ -102,6 +100,14 @@ public class TilemapVisualizer : MonoBehaviour
         else if (WallTypesHelper.wallInnerCornerDownRight.Contains(typeAsInt))
         {
             tile = wallInnerCornerDownRight;
+        }
+        else if (WallTypesHelper.wallInnerCornerUpLeft.Contains(typeAsInt))
+        {
+            tile = wallInnerCornerUpLeft;
+        }
+        else if (WallTypesHelper.wallInnerCornerUpRight.Contains(typeAsInt))
+        {
+            tile = wallInnerCornerUpRight;
         }
         else if (WallTypesHelper.wallDiagonalCornerDownLeft.Contains(typeAsInt))
         {
@@ -127,10 +133,18 @@ public class TilemapVisualizer : MonoBehaviour
         {
             tile = wallBottom;
         }
-        
-        
-        if(tile!=null)
-            PaintSingleTile(wallTilemap, tile, position);
+        else if (WallTypesHelper.wallSideLeft.Contains(typeAsInt))
+        {
+            tile = wallSideLeft;
+        }
+
+
+        if (tile != null)
+        {
+            Vector2Int pos = position;
+            pos.y += 1;
+            PaintSingleTile(wallTilemap, tile, pos);
+        }
     }
 }
 

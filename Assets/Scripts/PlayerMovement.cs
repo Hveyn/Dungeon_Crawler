@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _rend = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        
+        
     }
 
     private void Update()

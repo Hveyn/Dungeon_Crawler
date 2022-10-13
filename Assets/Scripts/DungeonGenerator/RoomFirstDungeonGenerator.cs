@@ -13,6 +13,9 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGeneratop
    [SerializeField]
    private bool randomWalkRooms = false;
 
+   [SerializeField] private GameObject player;
+   
+   
    protected override void RunProceduralGeneration()
    {
       CreateRooms();
@@ -40,6 +43,7 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGeneratop
          roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
       }
 
+      player.transform.position = new Vector3Int(roomCenters[0].x, roomCenters[0].y, 0);
       HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
       floor.UnionWith(corridors);
       tilemapVisualizer.PaintFloorTiles(floor);

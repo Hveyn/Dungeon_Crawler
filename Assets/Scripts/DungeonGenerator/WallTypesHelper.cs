@@ -19,7 +19,8 @@ public static class WallTypesHelper
 
     public static HashSet<int> wallSideLeft = new HashSet<int>
     {
-        0b0100
+        0b0100,
+        0b01110000
     };
 
     public static HashSet<int> wallSideRight = new HashSet<int>
@@ -77,6 +78,24 @@ public static class WallTypesHelper
 
     };
 
+    public static HashSet<int> wallInnerCornerUpRight = new HashSet<int>
+    {
+        0b00011111,
+        0b00011110,
+        0b00001111,
+        0b00001110
+        
+    };
+    
+    public static HashSet<int> wallInnerCornerUpLeft = new HashSet<int>
+    {
+        0b01111100,
+        0b00111100,
+        0b11110000,
+        0b00111000,
+        0b01111000
+    };
+    
     public static HashSet<int> wallDiagonalCornerDownLeft = new HashSet<int>
     {
         0b01000000
@@ -90,7 +109,7 @@ public static class WallTypesHelper
     public static HashSet<int> wallDiagonalCornerUpLeft = new HashSet<int>
     {
         0b00010000,
-        0b01010000,
+        0b01010000
     };
 
     public static HashSet<int> wallDiagonalCornerUpRight = new HashSet<int>

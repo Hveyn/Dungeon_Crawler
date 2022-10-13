@@ -43,6 +43,7 @@ public static class WallGenerator
             string neighboursBinaryType = "";
             foreach (var direction in Direction2D.cardinalDiractionsList)
             {
+                
                 var neighbourPosition = position + direction;
                 if (floorPositions.Contains(neighbourPosition))
                 {
