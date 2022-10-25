@@ -8,11 +8,11 @@ using UnityEngine.Tilemaps;
 public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField]
-    private Tilemap floorTilemap, wallTilemap;
+    private Tilemap floorTilemap, wallTilemap, wallsLeftRightBottom;
     [SerializeField]
     private TileBase floorTile, wallTop, wallOnTop, wallSideRight, wallSideLeft, wallBottom, wallFull,
         wallInnerCornerDownLeft, wallInnerCornerDownRight, wallInnerCornerUpLeft, wallInnerCornerUpRight,
-        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft;
+        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft, empyTile;
 
     public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
@@ -32,6 +32,13 @@ public class TilemapVisualizer : MonoBehaviour
         var tilePosition = tilemap.WorldToCell((Vector3Int)position);
         tilemap.SetTile(tilePosition, tile);
     }
+    private void PaintBottomSingleTile(Tilemap tilemap, TileBase tile, Vector2Int position)
+    {
+        var tilePosition = tilemap.WorldToCell((Vector3Int)position);
+        tilemap.SetTile(tilePosition, tile);
+        wallTilemap.SetTile(tilePosition,empyTile);
+    }
+    
     private void PaintTopTile(Tilemap tilemap, TileBase botTile,TileBase topTile, Vector2Int position)
     {
         var tilePosition = tilemap.WorldToCell((Vector3Int)position);
@@ -44,6 +51,7 @@ public class TilemapVisualizer : MonoBehaviour
     {
         floorTilemap.ClearAllTiles();
         wallTilemap.ClearAllTiles();
+        wallsLeftRightBottom.ClearAllTiles();
     }
 
     public void PaintSingeBasicWall(Vector2Int position, string binaryType)
@@ -83,7 +91,9 @@ public class TilemapVisualizer : MonoBehaviour
             {
                 Vector2Int pos = position;
                 pos.y += 1;
-                PaintSingleTile(wallTilemap, tile, pos);
+
+                PaintBottomSingleTile(wallsLeftRightBottom, tile, pos);
+
             }
         }
     }
@@ -143,7 +153,7 @@ public class TilemapVisualizer : MonoBehaviour
         {
             Vector2Int pos = position;
             pos.y += 1;
-            PaintSingleTile(wallTilemap, tile, pos);
+            PaintBottomSingleTile(wallsLeftRightBottom,tile,pos);
         }
     }
 }
