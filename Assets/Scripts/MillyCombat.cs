@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MillyCombat : MonoBehaviour
@@ -8,12 +5,10 @@ public class MillyCombat : MonoBehaviour
     [SerializeField] 
     private int damage = 1;
     private Animator _weaponAnimator;
-    private BoxCollider2D _collider;
-    
+
     void Start()
     {
         _weaponAnimator = GetComponent<Animator>();
-        _collider = GetComponent<BoxCollider2D>();
     }
     
     void Update()

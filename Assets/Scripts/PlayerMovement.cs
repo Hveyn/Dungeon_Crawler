@@ -50,14 +50,6 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = new Vector2(_moveDirection.x * moveSpeed, _moveDirection.y * moveSpeed);
 
         //Rotate sprite character
-        if (_mousePosition.x < _rb.position.x)
-        {
-            _rend.flipX = true;
-        }
-        else
-        {
-            _rend.flipX = false;
-        }
-
+        _rend.flipX = _mousePosition.x < _rb.position.x;
     }
 }

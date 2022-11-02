@@ -16,8 +16,10 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
    [SerializeField] 
    private GameObject player;
 
+   [SerializeField] private GameObject slime;
+
    [SerializeField]
-   private int spanCorridorConnect = 0;
+   private int spanCorridorConnect;
    
    
    protected override void RunProceduralGeneration()
@@ -30,9 +32,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       var roomsList = ProceduralGenerationAlgorithm.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition,
          new Vector3Int(dungeonWidth, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
 
-      HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
-      
-      floor = CreateSimpleRooms(roomsList);
+      HashSet<Vector2Int> floor = CreateSimpleRooms(roomsList);
 
       List<Vector2Int> roomCenters = new List<Vector2Int>();
       foreach (var room in roomsList)
@@ -41,6 +41,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       }
 
       player.transform.position = new Vector3Int(roomCenters[0].x, roomCenters[0].y, 0);
+      slime.transform.position = new Vector3Int(roomCenters[0].x+1, roomCenters[0].y+1, 0);
       HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
       floor.UnionWith(corridors);
       tilemapVisualizer.PaintFloorTiles(floor);
@@ -71,7 +72,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       HashSet<Vector2Int> corridor = new HashSet<Vector2Int>();
       var position = currentRoomCenter;
       
-      Vector2Int parallelPosition = position;
+      Vector2Int parallelPosition;
 
       corridor.Add(position);
 

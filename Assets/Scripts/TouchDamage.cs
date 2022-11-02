@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TouchDamage : MonoBehaviour
@@ -10,12 +7,15 @@ public class TouchDamage : MonoBehaviour
     [SerializeField]
     private int touchDamage = 1;
     
-    private Collider2D _collider2D;
-
-    private void Start()
+    /*private void OnTriggerStay2D(Collider2D col)
     {
-        _collider2D = GetComponent<Collider2D>();
-    }
+        GameObject target = col.gameObject;
+
+        if (target == player)
+        {
+            player.GetComponent<CounterHealth>().TakeDamage(touchDamage);
+        }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D col)
     {
