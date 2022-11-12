@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -14,6 +16,19 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] 
     private GameObject bombItemPrefab;
     
+    [Header("UI")]
+    [SerializeField] 
+    private Text uiCountCoins;
+    [SerializeField]
+    private int minCoinsInBag;
+    [SerializeField]
+    private int maxCoinsInBag;
+    [SerializeField] 
+    private Text uiCountKeys;
+   
+    private int _countCoins = 0;
+    private int _countKeys = 0;
+
     private int _selectedSlot = -1;
 
     private void Awake()
@@ -25,6 +40,9 @@ public class InventoryManager : MonoBehaviour
     {
         ChangedSelectedSlot(0);
         GetSelectedItem(false);
+
+        uiCountCoins.text = "0";
+        uiCountKeys.text = "0";
     }
 
     private void Update()
@@ -60,13 +78,28 @@ public class InventoryManager : MonoBehaviour
         _selectedSlot = newValue;
     }
     
-    public bool AddItem(Item item)
+    public bool AddItem(SpetificationsItem spetsItem)
     {
+        if (spetsItem.Type == SpetificationsItem.ItemType.Story)
+        {
+            if (spetsItem.Iname == SpetificationsItem.ItemName.Coin)
+            {
+                _countCoins += Random.Range(minCoinsInBag,maxCoinsInBag);
+                UpdateUiCount(uiCountCoins, _countCoins);
+                return false;
+            }
+            else if (spetsItem.Iname == SpetificationsItem.ItemName.Key)
+            {
+                _countKeys += 1;
+                UpdateUiCount(uiCountKeys, _countKeys);
+                return false;
+            }
+        }
         
         foreach (var slot in inventorySlots)
         {
             InventoryItems itemInSlot = slot.GetComponentInChildren<InventoryItems>();
-            if (itemInSlot != null && itemInSlot.Item == item && itemInSlot.count < maxStackedItems)
+            if (itemInSlot != null && itemInSlot.SpetificationsItem == spetsItem && itemInSlot.count < maxStackedItems)
             {
 
                 itemInSlot.count++;
@@ -79,7 +112,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot;
-            if (item.Iname == Item.ItemName.Bomb)
+            if ((int) spetsItem.Iname == 1)
             {
                 slot = inventorySlots[1];
             }
@@ -95,7 +128,7 @@ public class InventoryManager : MonoBehaviour
             InventoryItems itemInSlot = slot.GetComponentInChildren<InventoryItems>();
             if (itemInSlot == null)
             {
-                SpawnNewItem(item, slot);
+                SpawnNewItem(spetsItem, slot);
                 return true;
             }
             
@@ -104,10 +137,10 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    private void SpawnNewItem(Item item, InventorySlot slot)
+    private void SpawnNewItem(SpetificationsItem spetificationsItem, InventorySlot slot)
     {
         GameObject newItemGo;
-        if (item.Iname == Item.ItemName.Bomb)
+        if (spetificationsItem.Iname == SpetificationsItem.ItemName.Bomb)
         {
             newItemGo = Instantiate(bombItemPrefab, slot.transform);
         }
@@ -117,18 +150,18 @@ public class InventoryManager : MonoBehaviour
         }
         
         InventoryItems inventoryItem = newItemGo.GetComponent<InventoryItems>();
-        inventoryItem.InitializeItem(item);
+        inventoryItem.InitializeItem(spetificationsItem);
     }
 
-    public Item GetSelectedItem(bool use)
+    public SpetificationsItem GetSelectedItem(bool use)
     {
         InventorySlot slot = inventorySlots[_selectedSlot];
         InventoryItems itemInSlot = slot.GetComponentInChildren<InventoryItems>();
         if (itemInSlot != null)
         {
 
-            Item item = itemInSlot.Item;
-            if (use && item.Iname != Item.ItemName.Sword)
+            SpetificationsItem spetificationsItem = itemInSlot.SpetificationsItem;
+            if (use && spetificationsItem.Iname != SpetificationsItem.ItemName.Sword)
             {
                 itemInSlot.count--;
                 if (itemInSlot.count <= 0)
@@ -140,9 +173,14 @@ public class InventoryManager : MonoBehaviour
                     itemInSlot.RefreshCount();
                 }
             }
-            return item;
+            return spetificationsItem;
         }
         
         return null;
+    }
+
+    private void UpdateUiCount(Text text, int count)
+    {
+        text.text = count.ToString();
     }
 }

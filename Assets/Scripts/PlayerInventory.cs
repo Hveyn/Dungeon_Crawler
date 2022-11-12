@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -10,72 +11,73 @@ public class PlayerInventory : MonoBehaviour
     private GameObject[] items;
 
     private GameObject _newTool;
-    private Item _oldItem;
-
+    private SpetificationsItem _oldSpetsItem;
+    
     void Update()
     {
-        Item newItem = InventoryManager.Instance.GetSelectedItem(false);
-
+        SpetificationsItem newItem = InventoryManager.Instance.GetSelectedItem(false);
+        
         if (newItem != null)
         {
-            if (_oldItem != newItem)
+            if (_oldSpetsItem != newItem)
             {
                 CreateItem(newItem);
-                _oldItem = newItem;
+                _oldSpetsItem = newItem;
             }
         }
         else
         {
-            _oldItem = null;
+            _oldSpetsItem = null;
             Destroy(_newTool);
         }
         
-        if (_oldItem == null)
+        if (_oldSpetsItem == null)
         {
             InventoryManager.Instance.ChangedSelectedSlot(0);
         }
         
         if (Input.GetMouseButtonDown(0))
         {
-            if (_oldItem.stackable)
+            if (_oldSpetsItem.stackable)
             {
                 InventoryManager.Instance.GetSelectedItem(true);
             }
         }
     }
 
-    private void CreateItem(Item item)
+    private void CreateItem(SpetificationsItem statsItem)
     {
         if (_newTool != null)
         {
             Destroy(_newTool);
         }
         
-        if (item.Iname == Item.ItemName.Sword)
+        
+        if (statsItem.Iname == SpetificationsItem.ItemName.Sword)
         {
             _newTool = Instantiate(items[0], pointRotation.transform);
             _newTool.GetComponent<ItemRotation>().player = player;
             _newTool.GetComponent<ItemRotation>().pointRotation = pointRotation;
         }
-        else if (item.Iname == Item.ItemName.Bomb)
+        else if (statsItem.Iname == SpetificationsItem.ItemName.Bomb)
         {
             _newTool = Instantiate(items[1], pointRotation.transform);
             _newTool.GetComponent<ItemRotation>().player = player;
             _newTool.GetComponent<ItemRotation>().pointRotation = pointRotation;
         }
-        else if (item.Iname == Item.ItemName.FlaskGreen)
+        else if (statsItem.Iname == SpetificationsItem.ItemName.FlaskGreen)
         {
             _newTool = Instantiate(items[2], pointRotation.transform);
             _newTool.GetComponent<ItemRotation>().player = player;
             _newTool.GetComponent<ItemRotation>().pointRotation = pointRotation;
         }
-        else if (item.Iname == Item.ItemName.FlaskRed)
+        else if (statsItem.Iname == SpetificationsItem.ItemName.FlaskRed)
         {
             _newTool = Instantiate(items[3], pointRotation.transform);
             _newTool.GetComponent<ItemRotation>().player = player;
             _newTool.GetComponent<ItemRotation>().pointRotation = pointRotation;
         }
-        else if (item.Iname == Item.ItemName.FlaskYellow)
+        else if (statsItem.Iname == SpetificationsItem.ItemName.FlaskYellow)
         {
             _newTool = Instantiate(items[4], pointRotation.transform);
             _newTool.GetComponent<ItemRotation>().player = player;
@@ -83,5 +85,17 @@ public class PlayerInventory : MonoBehaviour
         }
         
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        GameObject newObject = col.gameObject;
+        Debug.Log(newObject.name);
+        if (newObject.GetComponent<Item>())
+        {
+            var newItem = newObject.GetComponent<Item>().SpetsItem;
+            InventoryManager.Instance.AddItem(newItem);
+            Destroy(newObject);
+        }
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class InventoryItems : MonoBehaviour
 {
     [SerializeField] 
-    private Item item;
+    private SpetificationsItem spetificationsItem;
 
-    public Item Item => item;
+    public SpetificationsItem SpetificationsItem => spetificationsItem;
     
     [Header("Ui")]
     [SerializeField] 
@@ -14,10 +14,10 @@ public class InventoryItems : MonoBehaviour
     
     public int count = 1;
 
-    public void InitializeItem(Item newItem)
+    public void InitializeItem(SpetificationsItem newSpetificationsItem)
     {
-        item = newItem;
-        gameObject.GetComponent<Image>().sprite = newItem.image;
+        spetificationsItem = newSpetificationsItem;
+        gameObject.GetComponent<Image>().sprite = newSpetificationsItem.image;
         RefreshCount();
     }
 

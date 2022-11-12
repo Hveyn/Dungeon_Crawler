@@ -623,7 +623,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 80, y: 80}
-  m_Spacing: {x: 8, y: 2}
+  m_Spacing: {x: 6, y: 2}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &5560216786372554425
@@ -1005,6 +1005,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7366196974960640762, guid: b5230c2f9961319438b9b6dff48a5888, type: 3}
+      propertyPath: uiCountKeys
+      value: 
+      objectReference: {fileID: 794263341708131039}
+    - target: {fileID: 7366196974960640762, guid: b5230c2f9961319438b9b6dff48a5888, type: 3}
+      propertyPath: uiCountCoins
+      value: 
+      objectReference: {fileID: 7349696177188561836}
+    - target: {fileID: 7366196974960640762, guid: b5230c2f9961319438b9b6dff48a5888, type: 3}
+      propertyPath: maxCoinsInBag
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366196974960640762, guid: b5230c2f9961319438b9b6dff48a5888, type: 3}
+      propertyPath: minCoinsInBag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7366196974960640762, guid: b5230c2f9961319438b9b6dff48a5888, type: 3}
       propertyPath: bombItemPrefab
       value: 
       objectReference: {fileID: 5083388754943512913, guid: 340e49c17e994e94cbf72f72997b8eff, type: 3}
@@ -1282,6 +1298,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2750140585919992465, guid: db97ee94d30a45745973b52f5ab759f3, type: 3}
       propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 90e8cdc9f60dd3447be3bec9c54dd991, type: 2}
+    - target: {fileID: 2750140585919992465, guid: db97ee94d30a45745973b52f5ab759f3, type: 3}
+      propertyPath: spetificationsItem
       value: 
       objectReference: {fileID: 11400000, guid: 90e8cdc9f60dd3447be3bec9c54dd991, type: 2}
     - target: {fileID: 6181883663555990793, guid: db97ee94d30a45745973b52f5ab759f3, type: 3}

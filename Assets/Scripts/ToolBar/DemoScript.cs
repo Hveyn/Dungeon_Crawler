@@ -5,7 +5,7 @@ public class DemoScript : MonoBehaviour
     [SerializeField] 
     private InventoryManager inventoryManager;
     [SerializeField] 
-    private Item[] itemToPickup;
+    private SpetificationsItem[] itemToPickup;
 
     public void PickupItem(int id)
     {
@@ -16,10 +16,10 @@ public class DemoScript : MonoBehaviour
 
     public void UseSelectedItem()
     {
-        Item receivedItem = inventoryManager.GetSelectedItem(true);
-        if (receivedItem != null)
+        SpetificationsItem receivedSpetificationsItem = inventoryManager.GetSelectedItem(true);
+        if (receivedSpetificationsItem != null)
         {
-            Debug.Log("used Item" + receivedItem);
+            Debug.Log("used Item" + receivedSpetificationsItem);
         }
         else
         {
