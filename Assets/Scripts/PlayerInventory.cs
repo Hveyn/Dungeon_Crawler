@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
     private GameObject _newTool;
     private SpetificationsItem _oldSpetsItem;
     
-    void Update()
+    private void FixedUpdate()
     {
         SpetificationsItem newItem = InventoryManager.Instance.GetSelectedItem(false);
         

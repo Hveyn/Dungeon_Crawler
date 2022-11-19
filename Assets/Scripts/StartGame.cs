@@ -5,10 +5,13 @@ public class StartGame : MonoBehaviour
 {
     [SerializeField] private GameObject generator;
     [SerializeField] private NavMeshSurface2d navMesh;
-    void Start()
+    void Update()
     {
-        generator.GetComponent<RoomFirstDungeonGenerator>().GenerateDungeon();
-        navMesh.BuildNavMesh();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            generator.GetComponent<RoomFirstDungeonGenerator>().GenerateDungeon();
+        }
+           
     }
 
 }

@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
 {
@@ -13,45 +16,54 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
    [Range(0,10)]
    private int offset = 1;
 
-   [SerializeField] 
-   private GameObject player;
-
-   [SerializeField] private GameObject slime;
-
    [SerializeField]
    private int spanCorridorConnect;
-   
-   
+
+   public UnityEvent onFinishedRoomGeneration;
+
+   private DungeonData _dungeonData;
    protected override void RunProceduralGeneration()
    {
+      _dungeonData = FindObjectOfType<DungeonData>();
+      if (_dungeonData == null) _dungeonData = gameObject.AddComponent<DungeonData>();
       CreateRooms();
    }
+   
 
    private void CreateRooms()
    {
+      _dungeonData.Reset();
+      
       var roomsList = ProceduralGenerationAlgorithm.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition,
          new Vector3Int(dungeonWidth, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
 
-      HashSet<Vector2Int> floor = CreateSimpleRooms(roomsList);
-
+      HashSet<Vector2Int> floor= new HashSet<Vector2Int>();
       List<Vector2Int> roomCenters = new List<Vector2Int>();
       foreach (var room in roomsList)
       {
+         HashSet<Vector2Int> floorRoom = CreateSimpleRoom(room);
          roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
-      }
 
-      player.transform.position = new Vector3Int(roomCenters[0].x, roomCenters[0].y, 0);
-      slime.transform.position = new Vector3Int(roomCenters[0].x+1, roomCenters[0].y+1, 0);
-      HashSet<Vector2Int> corridors = ConnectRooms(roomCenters);
-      floor.UnionWith(corridors);
-      tilemapVisualizer.PaintFloorTiles(floor);
+         Room dataRoom = new Room((Vector2Int)Vector3Int.RoundToInt(room.center), floorRoom);
+         _dungeonData.Rooms.Add(dataRoom);
+         tilemapVisualizer.PaintFloorTiles(floorRoom);
+         floor.UnionWith(floorRoom);
+      }
+      
+
+      ConnectRooms(roomCenters);
+      
+      //floor.UnionWith(corridors);
+      tilemapVisualizer.PaintcoridorFloorTiles(_dungeonData.Path);
+      floor.UnionWith(_dungeonData.Path);
       WallGenerator.CreateWalls(floor, tilemapVisualizer);
+      
+      onFinishedRoomGeneration?.Invoke();
    }
    
 
-   private HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
+   private void ConnectRooms(List<Vector2Int> roomCenters)
    {
-      HashSet<Vector2Int> corridors = new HashSet<Vector2Int>();
       var currentRoomCenter = roomCenters[Random.Range(0,roomCenters.Count)];
       roomCenters.Remove(currentRoomCenter);
 
@@ -61,10 +73,8 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
          roomCenters.Remove(closest);
          HashSet<Vector2Int> newCorridor = CreateCorridor(currentRoomCenter, closest);
          currentRoomCenter = closest;
-         corridors.UnionWith(newCorridor);
+         _dungeonData.Path.UnionWith(newCorridor);
       }
-
-      return corridors;
    }
 
    private HashSet<Vector2Int> CreateCorridor(Vector2Int currentRoomCenter, Vector2Int destination)
@@ -134,20 +144,19 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       return closest;
    }
 
-   private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+   private HashSet<Vector2Int> CreateSimpleRoom(BoundsInt room)
    {
       HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
-      foreach (var room in roomsList)
+
+      for (int col = offset; col < room.size.x - offset; col++)
       {
-         for (int col = offset; col < room.size.x - offset; col++)
+         for (int row = offset; row < room.size.y - offset; row++)
          {
-            for (int row = offset; row < room.size.y - offset; row++)
-            {
-               Vector2Int position = (Vector2Int)room.min + new Vector2Int(col, row);
-               floor.Add(position);
-            }
+            Vector2Int position = (Vector2Int)room.min + new Vector2Int(col, row);
+            floor.Add(position);
          }
       }
+      
 
       return floor;
    }
