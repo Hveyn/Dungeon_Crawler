@@ -21,9 +21,9 @@ public class TouchDamage : MonoBehaviour
     {
         GameObject target = col.gameObject;
 
-        if (target == player)
+        if (target.CompareTag("Player"))
         {
-            player.GetComponent<CounterHealth>().TakeDamage(touchDamage);
+            target.GetComponent<CounterHealth>().TakeDamage(touchDamage);
         }
     }
 }

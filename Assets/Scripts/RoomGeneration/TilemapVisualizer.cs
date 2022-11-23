@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField]
-    private Tilemap floorTilemap, wallTilemap, wallsLeftRightBottomTilemap, fullWallsTilemap;
+    private Tilemap floorTilemap, wallTilemap, wallsLeftRightBottomTilemap, fullWallsTilemap, coliderTilemap;
     [SerializeField]
     private TileBase floorTile,pathFloorTile, wallTop, wallOnTop, wallSideRight, wallSideLeft, wallBottom, wallFull,
         wallInnerCornerDownLeft, wallInnerCornerDownRight, wallInnerCornerUpLeft, wallInnerCornerUpRight,
-        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft, empyTile;
+        wallDiagonalCornerDownRight, wallDiagonalCornerDownLeft, wallDiagonalCornerUpRight, wallDiagonalCornerUpLeft,
+        empyWallTile, empyFloorTile, nextLevelTile;
 
     [SerializeField]
     bool showPath = false;
@@ -20,10 +21,24 @@ public class TilemapVisualizer : MonoBehaviour
         PaintTiles(floorPositions, floorTilemap, floorTile);
     }
     
+    public void PaintTransferTile(Vector2Int transferNextLevelPosition )
+    {
+        PaintTile(floorTilemap, nextLevelTile,transferNextLevelPosition);
+    }
+    
     public void PaintcoridorFloorTiles(IEnumerable<Vector2Int> floorPositions)
     {
         if (showPath) PaintTiles(floorPositions, floorTilemap, pathFloorTile);
         else PaintTiles(floorPositions, floorTilemap, floorTile);
+    }
+
+    public void PaintColiderFloorTiles(HashSet<Vector2Int> coliderMapPositions)
+    {
+        foreach (var position in coliderMapPositions)
+        {
+            Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
+            coliderTilemap.SetTile(tilePosition, empyFloorTile);
+        }
     }
     
     private void PaintTiles(IEnumerable<Vector2Int> positions, Tilemap tilemap, TileBase tile)
@@ -33,18 +48,18 @@ public class TilemapVisualizer : MonoBehaviour
             PaintTile(tilemap, tile, position);
         }
     }
-
+    
     private void PaintTile(Tilemap tilemap, TileBase tile, Vector2Int position)
     {
         var tilePosition = tilemap.WorldToCell((Vector3Int)position);
         tilemap.SetTile(tilePosition, tile);
         if (tilemap != wallTilemap)
         {
-            wallTilemap.SetTile(tilePosition,empyTile);
+            wallTilemap.SetTile(tilePosition,empyWallTile);
             if (tile != wallFull)
             {
                 tilePosition = new Vector3Int(tilePosition.x, tilePosition.y - 1, tilePosition.z);
-                fullWallsTilemap.SetTile(tilePosition,empyTile);
+                fullWallsTilemap.SetTile(tilePosition,empyWallTile);
             }
         }
     }
@@ -62,6 +77,7 @@ public class TilemapVisualizer : MonoBehaviour
         wallTilemap.ClearAllTiles();
         wallsLeftRightBottomTilemap.ClearAllTiles();
         fullWallsTilemap.ClearAllTiles();
+        coliderTilemap.ClearAllTiles();
     }
 
     public void PaintSingeBasicWall(Vector2Int position, string binaryType)

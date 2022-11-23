@@ -24,15 +24,17 @@ public class RoomDataExtractor : MonoBehaviour
         {
             return;
         }
-            
+
+        int countAllFloorTiles = 0;
 
         foreach (Room room in _dungeonData.Rooms)
         {
+            countAllFloorTiles += room.FloorTiles.Count;
             // Поиск угловых, около сен и внутренних тайлов
             foreach (Vector2Int tilePosition in room.FloorTiles)
             {
                 int neighboursCount = 4;
-
+                
                 if (room.FloorTiles.Contains(tilePosition + Vector2Int.up) == false)
                 {
                     room.NearWallTileUp.Add(tilePosition);
@@ -67,7 +69,8 @@ public class RoomDataExtractor : MonoBehaviour
             room.NearWallTileLeft.ExceptWith(room.CornerTiles);
             room.NearWallTileRight.ExceptWith(room.CornerTiles);
         }
-        
+
+        _dungeonData.avgCountFloorTilesInRooms = countAllFloorTiles / _dungeonData.Rooms.Count;
         Invoke("RunEvent", 1);
     }
 

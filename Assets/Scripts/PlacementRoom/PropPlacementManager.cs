@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
@@ -27,6 +28,9 @@ public class PropPlacementManager : MonoBehaviour
     [SerializeField]
     private float sizeColliderProp = 0.8f;
     
+    [SerializeField] 
+    private NavMeshSurface2d navmesh;
+    
     public UnityEvent OnFinished;
     
     private void Awake()
@@ -40,6 +44,7 @@ public class PropPlacementManager : MonoBehaviour
             return;
         foreach (Room room in _dungeonData.Rooms)
         {
+            
             //Расположение объектов в углах ~ Place props place propc in the corners
             List<Prop> cornerProps = propsToPlace.Where(x => x.Corner).ToList();
             PlaceCornerProps(room, cornerProps);
@@ -84,11 +89,14 @@ public class PropPlacementManager : MonoBehaviour
 
             PlaceProps(room, innerProps, room.InnerTiles, PlacementOriginCorner.BottomLeft);
         }
+        navmesh.BuildNavMesh();
         OnFinished?.Invoke();
     }
 
     private void PlaceProps(Room room, List<Prop> wallProps, HashSet<Vector2Int> avaiableTiles, PlacementOriginCorner placement)
     {
+        float chancePlaceProp;
+        chancePlaceProp = room.FloorTiles.Count / _dungeonData.avgCountFloorTilesInRooms;
         /*Убераем позиции пути коридора из позможных мест для размещения объекта
          ~ Remove path position from the initial nearWallTiles to ensure the clean path to traverse dungeon*/
         HashSet<Vector2Int> tempPositions = new HashSet<Vector2Int>(avaiableTiles);
@@ -97,20 +105,23 @@ public class PropPlacementManager : MonoBehaviour
         // Пытаемся расположить все объекты для каждого места ~ We will try place all the props
         foreach (Prop propToPlace in wallProps)
         {
-            // Расчитываем кол-во объектов одного типа ~ We will to place only certain quantuty of each prop
-            int quantity
-                = UnityEngine.Random.Range(propToPlace.PlacementQuantityMin, propToPlace.PlacementQuantityMax + 1);
-
-            for (int i = 0; i < quantity; i++)
+            if (UnityEngine.Random.Range(0f, 1f) < chancePlaceProp)
             {
-                //удаляем занятые посиции ~ remove taken position
-                tempPositions.ExceptWith(room.PropsPositions);
-                //перемешиваем позиции ~ shiffle the positions
-                List<Vector2Int> avaiablePositions = tempPositions.OrderBy(x => Guid.NewGuid()).ToList();
-                /* Если в точке размещения нет объекта то пытаемся разместить объект ~
-                   If placement has failed there is no point in trying to place the same prop again*/
-                if(TryPlacingPropBruteForce(room,propToPlace,avaiablePositions,placement) == false)
-                    break;
+                // Расчитываем кол-во объектов одного типа ~ We will to place only certain quantuty of each prop
+                int quantity = UnityEngine.Random.Range(propToPlace.PlacementQuantityMin,
+                    propToPlace.PlacementQuantityMax + 1);
+
+                for (int i = 0; i < quantity; i++)
+                {
+                    //удаляем занятые посиции ~ remove taken position
+                    tempPositions.ExceptWith(room.PropsPositions);
+                    //перемешиваем позиции ~ shiffle the positions
+                    List<Vector2Int> avaiablePositions = tempPositions.OrderBy(x => Guid.NewGuid()).ToList();
+                    /* Если в точке размещения нет объекта то пытаемся разместить объект ~
+                       If placement has failed there is no point in trying to place the same prop again*/
+                    if (TryPlacingPropBruteForce(room, propToPlace, avaiablePositions, placement) == false)
+                        break;
+                }
             }
         }
     }
@@ -283,16 +294,21 @@ public class PropPlacementManager : MonoBehaviour
         //Добавление коллайдера ~ Add a collider
         CapsuleCollider2D collider
             = propSpriteRenderer.gameObject.AddComponent<CapsuleCollider2D>();
+
+        NavMeshObstacle obstacle = propSpriteRenderer.gameObject.GetComponent<NavMeshObstacle>();
         collider.offset = Vector2.zero;
+        
+
         if (propToPlace.PropSize.x > propToPlace.PropSize.y)
         {
             collider.direction = CapsuleDirection2D.Horizontal;
         }
-
+        
         Vector2 size
             = new Vector2(propToPlace.PropSize.x * sizeColliderProp, propToPlace.PropSize.y * sizeColliderProp);
         collider.size = size;
-
+        obstacle.size = size;
+        
         prop.transform.localPosition = (Vector2)placementPosition;
         
         //регулировка позиции спрайта ~ abjust the position to the sprite
@@ -303,6 +319,7 @@ public class PropPlacementManager : MonoBehaviour
            Save the prop in the room data (so in the dungeon data) */
         room.PropsPositions.Add(placementPosition);
         room.PropGameObjectRaferences.Add(prop);
+        
         return prop;
     }
 

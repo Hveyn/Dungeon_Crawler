@@ -5,8 +5,7 @@ using UnityEngine.UIElements;
 
 public class VizorEnemy : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject target;
+    public GameObject target;
     
     [SerializeField]
     private GameObject enemy;

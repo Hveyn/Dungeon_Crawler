@@ -4,26 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class AgentPlacer : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab, playerPrefab;
+    [SerializeField] 
+    private GameObject enemyPrefab, playerPrefab, allEnemyGroup;
 
-    [SerializeField] private int playerRoomIndex;
-    [SerializeField] private CinemachineVirtualCamera vCamer;
+    [SerializeField] 
+    private int playerRoomIndex;
+    [SerializeField] 
+    private CinemachineVirtualCamera vCamer;
 
-    [SerializeField] private int maxCountEnemiesInRoom;
+    [SerializeField] 
+    private int maxCountEnemiesInRoom;
 
-    [SerializeField, Range(0, 1)] private float chanceSpawnEnemyInRoom = 0.8f;
-    [SerializeField] private GameObject generator;
+    [SerializeField, Range(0, 1)] 
+    private float chanceSpawnEnemyInRoom = 0.8f;
+    [SerializeField] 
+    private GameObject generator;
+    
+    [SerializeField]
+    private bool showGizmo = false;
+
     private DungeonData _dungeonData;
-
-    public UnityEvent OnFinished;
-
     private int _countEnemyInRoom;
 
-    [SerializeField] private bool showGizmo = false;
+    
 
     private void Awake()
     {
@@ -45,6 +53,8 @@ public class AgentPlacer : MonoBehaviour
                  _dungeonData.PlayerRefence = player;
                  */
                 playerPrefab.transform.position = _dungeonData.Rooms[i].RoomCenterPos + Vector2.one * 0.5f;
+                playerPrefab.GetComponent<CounterHealth>().ResetHP();
+                continue;
             }
 
             Room room = _dungeonData.Rooms[i];
@@ -70,8 +80,7 @@ public class AgentPlacer : MonoBehaviour
                 }
             }
         }
-
-        OnFinished?.Invoke();
+        
     }
 
     private void PlaceEnemies(Room room, int enemyCount)
@@ -82,12 +91,29 @@ public class AgentPlacer : MonoBehaviour
             {
                 return;
             }
-            GameObject enemy = Instantiate(enemyPrefab);
-            enemy.transform.localPosition = (Vector2)room.PositionsAccessibleFromPath[k] + Vector2.one * 0.5f;
+            
+            GameObject enemy = Instantiate(enemyPrefab,allEnemyGroup.transform);
+            Vector2 enemyPosition = room.PositionsAccessibleFromPath[k] + Vector2.one * 0.5f;
+            enemy.transform.localPosition = enemyPosition;
+            adAI(enemy, enemyPosition);
+            
             room.EnemiesInTheRoom.Add(enemy);
         }
+        
+        
     }
 
+    private void adAI(GameObject enemy, Vector2 enemyPosition)
+    {
+        NavMeshAgent Ai =  enemy.AddComponent<NavMeshAgent>();
+        Ai.speed = 1.5f;
+        Ai.angularSpeed = 4;
+        Ai.acceleration = 8;
+        Ai.stoppingDistance = 1;
+
+        enemy.GetComponentInChildren<VizorEnemy>().target = playerPrefab;
+    }
+    
     private void OnDrawGizmosSelected()
     {
         if (_dungeonData == null || showGizmo == false)
@@ -104,6 +130,8 @@ public class AgentPlacer : MonoBehaviour
             }
         }
     }
+
+    
 }
 
 public class RoomGraph

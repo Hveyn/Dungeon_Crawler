@@ -49,7 +49,6 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
          tilemapVisualizer.PaintFloorTiles(floorRoom);
          floor.UnionWith(floorRoom);
       }
-      
 
       ConnectRooms(roomCenters);
       
@@ -57,10 +56,38 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       tilemapVisualizer.PaintcoridorFloorTiles(_dungeonData.Path);
       floor.UnionWith(_dungeonData.Path);
       WallGenerator.CreateWalls(floor, tilemapVisualizer);
-      
+
+      HashSet<Vector2Int> coliderFloor = GenColiderFloor(floor);
+
+      tilemapVisualizer.PaintColiderFloorTiles(coliderFloor);
+
       onFinishedRoomGeneration?.Invoke();
+
+      Vector2 transferNextLevelPos = _dungeonData.Rooms[_dungeonData.Rooms.Count - 1].RoomCenterPos;
+      tilemapVisualizer.PaintTransferTile(new Vector2Int((int)transferNextLevelPos.x,(int)transferNextLevelPos.y));
    }
-   
+
+   private HashSet<Vector2Int> GenColiderFloor(HashSet<Vector2Int> floor)
+   {
+      BoundsInt coliderMap = new BoundsInt((Vector3Int)startPosition,
+         new Vector3Int(dungeonWidth, dungeonHeight, 0));
+
+      HashSet<Vector2Int> coliderFloor = new HashSet<Vector2Int>();
+      for (int i = 0; i < coliderMap.size.x; i++)
+      {
+         for (int j = 0; j < coliderMap.size.y; j++)
+         {
+            Vector2Int pos =(Vector2Int)coliderMap.min + new Vector2Int(i, j);
+            if (floor.Contains(pos) == false)
+            {
+               coliderFloor.Add(pos);
+            }
+         }
+      }
+
+      return coliderFloor;
+   }
+
 
    private void ConnectRooms(List<Vector2Int> roomCenters)
    {

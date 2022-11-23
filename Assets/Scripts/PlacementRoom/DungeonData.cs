@@ -7,6 +7,11 @@ public class DungeonData : MonoBehaviour
 {
     public List<Room> Rooms { get; set; } = new List<Room>();
     public HashSet<Vector2Int> Path { get; set; } = new HashSet<Vector2Int>();
+
+    [HideInInspector]
+    public float avgCountFloorTilesInRooms;
+    [HideInInspector]
+    public int countChests;
     
     public GameObject PlayerRefence { get; set; }
     public void Reset()
