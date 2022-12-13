@@ -15,6 +15,7 @@ public class FinalPanel : MonoBehaviour
     
     private void OnEnable()
     {
+        Cursor.visible = true;
         Time.timeScale = 0;
         int priceKeys = Int32.Parse(counterKeys.text) * 150;
         int totalSum = Int32.Parse(counterCoins.text)+priceKeys;

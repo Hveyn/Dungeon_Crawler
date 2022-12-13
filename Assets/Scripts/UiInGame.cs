@@ -26,24 +26,43 @@ public class UiInGame : MonoBehaviour
     private int _stateHealthBar;
     private void Awake()
     {
+     
+        if(deathPanel.activeSelf) pausePanel.SetActive(false);
+        if(winPanel.activeSelf) pausePanel.SetActive(false);
         if(pausePanel.activeSelf) pausePanel.SetActive(false);
         Instance = this;
     }
 
     private void Update()
     {
-        
+        UiInGame[] copyUi = FindObjectsOfType<UiInGame>();
+        foreach (UiInGame copy in copyUi)
+        {
+            Debug.Log("find");
+            if (copy.gameObject != gameObject)
+            {
+                Debug.Log("not");
+                Destroy(copy.gameObject);
+            }
+        }
         player = GameObject.FindGameObjectWithTag("Player");
         StateHealthBar();
 
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (pausePanel.activeSelf)
             {
-                if (pausePanel.activeSelf) pausePanel.SetActive(false);
-                else pausePanel.SetActive(true);
+                pausePanel.SetActive(false);
+                Cursor.visible = false;
+            }
+            else
+            {
+                pausePanel.SetActive(true);
+                Cursor.visible = true;
             }
         }
+        
 
         if (player.IsDestroyed() || player == null)
         {

@@ -2197,10 +2197,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a100a7b8ad0a5494d9c945520c81029c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countCoins: {fileID: 5017671445201189030}
+  countCoins: {fileID: 3330338588732087234}
   counterCoins: {fileID: 7349696177188561836}
   counterKeys: {fileID: 794263341708131039}
-  countEnemy: {fileID: 5077012245548204234}
+  countEnemy: {fileID: 5882362755375773106}
 --- !u!1 &3613064017067207182
 GameObject:
   m_ObjectHideFlags: 0

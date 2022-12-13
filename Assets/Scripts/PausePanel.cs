@@ -4,6 +4,7 @@ public class PausePanel : MonoBehaviour
 {
     private void OnEnable()
     {
+        Cursor.visible = true;
         Time.timeScale = 0;
     }
 

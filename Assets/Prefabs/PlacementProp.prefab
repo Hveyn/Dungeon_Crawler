@@ -98,7 +98,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6687231751453297250, guid: 70832828e1e9a6348930aa6f9964520b, type: 3}
         m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
-        m_MethodName: FindCountEnemy
+        m_MethodName: CreateTransfer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -9,7 +9,6 @@ public class SceneManager : MonoBehaviour
     public static SceneManager Instance;
     [SerializeField] 
     private GameObject transferPrefab;
-
     
     [SerializeField]
     private RoomFirstDungeonGenerator generator;
@@ -41,9 +40,10 @@ public class SceneManager : MonoBehaviour
 
     public void LoadNextScene(int indexScene)
     {
+        if(indexScene == 0) Destroy(FindObjectOfType<UiInGame>().gameObject);
         UnityEngine.SceneManagement.SceneManager.LoadScene(indexScene);
     }
-
+    
     public void ExitGame()
     {
         Application.Quit();
