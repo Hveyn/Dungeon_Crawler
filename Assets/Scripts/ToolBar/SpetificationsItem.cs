@@ -10,19 +10,27 @@ public class SpetificationsItem : ScriptableObject
     private ItemType type;
     [SerializeField]
     private ActionType action;
-
+    [SerializeField,Range(0f,1f)] 
+    private float chanceSpawnItem;
+    [SerializeField]
+    private int maxCountItems;
+    
     public ItemName Iname => iname;
 
     public ItemType Type => type;
 
     public ActionType Action => action;
 
+    public float ChanceSpawnItem => chanceSpawnItem;
+    public int MaxCountItems => maxCountItems;
+    
     [Header("Only Ui")] 
     public bool stackable = true;
     
     [Header("Both")]
     public Sprite image;
 
+    
     public enum ItemName
     {
         Sword,
@@ -47,7 +55,7 @@ public class SpetificationsItem : ScriptableObject
         Heal,   // лечящие предметы
         Poison, // отравляющие предметы
         Boost,  // ускоряющие предметы
-        PowerUp, // усиляющие предметы
+        PowerBoost, // усиляющие предметы
         OpenDoor,
         Rezult
     }

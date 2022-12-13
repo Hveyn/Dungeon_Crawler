@@ -3,24 +3,59 @@ using UnityEngine;
 
 public class CounterHealth : MonoBehaviour
 {
-   [SerializeField] private int health=5;
+   [SerializeField] 
+   private int maxHealth = 5;
+
+   private DungeonData _dungeonData;
+
+ 
+   private int _health;
    
-   public int Health => health;
-   private int _healthStart;
+   public int MaxHealth => maxHealth;
+   public int Health => _health;
 
    private void Awake()
    {
-      _healthStart = health;
+      _dungeonData = FindObjectOfType<DungeonData>();
+      _health = maxHealth;
    }
 
-   public void ResetHP()
+   public void ResetHp()
    {
-      health = _healthStart;
+      _health = maxHealth;
    }
+
+   public void Healing(int countHp)
+   {
+      if (_health + countHp > maxHealth)
+      {
+         _health = maxHealth;
+      }
+      else
+      {
+         _health += countHp;
+      }
+   }
+   
    public void TakeDamage(int damage)
    {
-      health -= damage;
-      if (health <= 0) Destroy(gameObject);
-      Debug.Log(health);
+      if (_health - damage <= 0) _health = 0;
+      else _health -= damage;
+      
+      Debug.Log(_health);
+      if (_health <= 0)
+      {
+         if (gameObject.CompareTag("Enemy"))
+         {
+            gameObject.GetComponent<DeathEnemy>().Death();
+            _dungeonData.countEnemy -= 1;
+            DataHolder.KillsEnemy += 1;
+         }
+         else
+         {
+            Destroy(gameObject);
+            StopAllCoroutines();
+         }
+      }
    }
 }

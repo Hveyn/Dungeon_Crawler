@@ -30,4 +30,14 @@ public class MillyCombat : MonoBehaviour
         }
         
     }
+
+    public void PowerBoost(int powerBoost)
+    {
+        damage *= powerBoost;
+    }
+    
+    public void PowerDown(int powerBoost)
+    {
+        damage /= powerBoost;
+    }
 }

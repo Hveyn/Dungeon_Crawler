@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &724993801197906697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165658435638722854}
+  - component: {fileID: 4981828845617161214}
+  m_Layer: 0
+  m_Name: FlaskEffectsGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &165658435638722854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724993801197906697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.689764, y: 29.474167, z: -0.16517171}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4981828845617161214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724993801197906697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e8ba1f37d783745b0f3ad37f769c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenFlaskEffects:
+  - {fileID: 11400000, guid: d15e6384ef4891b429a2916a4adf2c59, type: 2}
+  - {fileID: 11400000, guid: a5ac9049a15e7ca4c831cfb9036c8d26, type: 2}
+  - {fileID: 11400000, guid: aede51f9600078049bea945fc069fa60, type: 2}
+  - {fileID: 11400000, guid: 3c5c0ed7d25b8a74d8fb17c554d1e5b3, type: 2}
+  yellowFlaskEffects:
+  - {fileID: 11400000, guid: a6015bee29112694e96cc0438580f0d0, type: 2}
+  - {fileID: 11400000, guid: 8f0bf045b35fd6c45a1bbeaf0b99f7ea, type: 2}
+  - {fileID: 11400000, guid: 3b4d6178310801747b8f3ab0ad49fcff, type: 2}
+  - {fileID: 11400000, guid: 08d6ce9e5de43cf468ccd1c558790984, type: 2}
+  redFlaskEffects:
+  - {fileID: 11400000, guid: 0ef6238448328404397c418dd93932b8, type: 2}
+  - {fileID: 11400000, guid: 86000ab25c827d440ae741ee17566ef6, type: 2}
+  - {fileID: 11400000, guid: 8d0e463dc0969014bac16d50836520b8, type: 2}
+  - {fileID: 11400000, guid: f044e77481c858c4984720ac0191128c, type: 2}

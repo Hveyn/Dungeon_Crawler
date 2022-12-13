@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5925545235966569244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5925545235966569234}
+  - component: {fileID: 5925545235966569245}
+  - component: {fileID: 5925545235966569235}
+  m_Layer: 0
+  m_Name: PlacementProp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5925545235966569234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925545235966569244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.97831, y: 31.640675, z: -2.7162392}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5925545235966569245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925545235966569244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c13b05c0fb52f2043ab350c855c38b43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 4988143077033552454, guid: 06725b3598c62da49a3e0c149a896c09, type: 3}
+  propsToPlace:
+  - {fileID: 11400000, guid: 13fc1c7d162e6ae45b6dce73b7b931eb, type: 2}
+  - {fileID: 11400000, guid: 5bd19732fddda44469fd49ca5e0a9618, type: 2}
+  - {fileID: 11400000, guid: fcdc14e3323adb34ea0573595d3078c7, type: 2}
+  - {fileID: 11400000, guid: fa292ea36b133844a8b60836ac48fdf0, type: 2}
+  - {fileID: 11400000, guid: 7abdffef6de4c43448a332e1d14f4e1f, type: 2}
+  cornerPropPlacementChance: 0.7
+  propPrefab: {fileID: 1116898554614141611, guid: fde67329e8708a64f86ef245ca8e2f62, type: 3}
+  allPropPrefab: {fileID: 4933192170501765967, guid: 20b8f0d27a66b6043b3d160e3c28d12b, type: 3}
+  sizeColliderProp: 0.8
+  navmesh: {fileID: 0}
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5925545235966569235}
+        m_TargetAssemblyTypeName: AgentPlacer, Assembly-CSharp
+        m_MethodName: PlaceAgents
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5925545235966569235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925545235966569244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4626dd308b066494d8a36ee997061321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 7696384232153513479, guid: 4becfa61b26f6a94eba607d086896ab2, type: 3}
+  playerPrefab: {fileID: 5792868191073326091, guid: d63e44a9ae5b368489526e98da25cdd1, type: 3}
+  allEnemyGroup: {fileID: 0}
+  playerRoomIndex: 0
+  vCamer: {fileID: 0}
+  maxCountEnemiesInRoom: 5
+  chanceSpawnEnemyInRoom: 0.8
+  generator: {fileID: 0}
+  showGizmo: 0
+  onFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6687231751453297250, guid: 70832828e1e9a6348930aa6f9964520b, type: 3}
+        m_TargetAssemblyTypeName: SceneManager, Assembly-CSharp
+        m_MethodName: FindCountEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

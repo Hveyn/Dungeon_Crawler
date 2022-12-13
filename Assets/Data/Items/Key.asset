@@ -15,5 +15,7 @@ MonoBehaviour:
   iname: 5
   type: 2
   action: 5
+  chanceSpawnItem: 0.6
+  maxCountItems: 0
   stackable: 1
   image: {fileID: 21300000, guid: ce8155dc999c9e94987ddc5b6c1b97b3, type: 3}

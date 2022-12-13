@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ParametrsRoomGeneration : MonoBehaviour
+[CreateAssetMenu]
+public class ParametrsRoomGeneration : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   [Header("DungenSize")] 
+   public int dungeonWidth = 65;
+   public int dungeonHeight = 65;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   [Space, Header("MinRoomSize")] 
+   public int minRoomWidth = 10;
+   public int minRoomHeight = 10;
+
+   [Header("DistanceBetweenRooms"), Range(0, 10)]
+   public int offset = 1;
+
+   [Header("CorridorsWidth"), Range(0, 3)]
+   public int corridorsWidth = 1;
+
 }

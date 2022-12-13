@@ -46,8 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTilemap: {fileID: 0}
   wallTilemap: {fileID: 0}
-  wallsLeftRightBottom: {fileID: 0}
+  wallsLeftRightBottomTilemap: {fileID: 0}
+  fullWallsTilemap: {fileID: 0}
+  coliderTilemap: {fileID: 0}
   floorTile: {fileID: 11400000, guid: f5b066a5f7437a34592773a7f4402556, type: 2}
+  pathFloorTile: {fileID: 11400000, guid: 0b2520f2bdb7a0948b5fccd43295dc19, type: 2}
   wallTop: {fileID: 11400000, guid: 473519e662ad6f24a909eb8f450f87c6, type: 2}
   wallOnTop: {fileID: 11400000, guid: 5a208f96396ab344e908c5d993975445, type: 2}
   wallSideRight: {fileID: 11400000, guid: 4f4d50b3955591d4c9e17854c3dad939, type: 2}
@@ -62,4 +65,7 @@ MonoBehaviour:
   wallDiagonalCornerDownLeft: {fileID: 11400000, guid: 9066c76d1b0e1cf4591057bfe6e2dfc2, type: 2}
   wallDiagonalCornerUpRight: {fileID: 11400000, guid: bca4688268e5e6346a18157afc2cfae5, type: 2}
   wallDiagonalCornerUpLeft: {fileID: 11400000, guid: 7ac5b7bf5838bce4cbf34bba0d1dec5d, type: 2}
-  empyTile: {fileID: 11400000, guid: 564dfcdbb2d691e4e9eba283703bd7a8, type: 2}
+  empyWallTile: {fileID: 11400000, guid: 564dfcdbb2d691e4e9eba283703bd7a8, type: 2}
+  empyFloorTile: {fileID: 11400000, guid: 971b93a84c54ec24bb3cb3b5ba0915b2, type: 2}
+  nextLevelTile: {fileID: 11400000, guid: 7c54b3d0abaa0d8448041daf4b5c570f, type: 2}
+  showPath: 0

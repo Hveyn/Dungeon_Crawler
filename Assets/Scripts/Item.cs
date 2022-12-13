@@ -7,8 +7,13 @@ public class Item : MonoBehaviour
 
    public SpetificationsItem SpetsItem => spetsItem;
    
-   private void Start()
+   private void Awake()
    {
       gameObject.GetComponent<SpriteRenderer>().sprite = spetsItem.image;
+   }
+
+   public void SetItemType(SpetificationsItem newTypeItem)
+   {
+      spetsItem = newTypeItem;
    }
 }

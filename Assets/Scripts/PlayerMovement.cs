@@ -19,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _rend = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        
-        
     }
 
     private void Update()
@@ -43,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = new Vector2(horizontalMove, verticalMove).normalized;
         _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
-
+    
     // ReSharper disable Unity.PerformanceAnalysis
     private void Move()
     {
@@ -51,5 +49,15 @@ public class PlayerMovement : MonoBehaviour
 
         //Rotate sprite character
         _rend.flipX = _mousePosition.x < _rb.position.x;
+    }
+
+    public void BoostSpeed(float boostSpeed)
+    {
+        moveSpeed *= boostSpeed;
+    }
+    
+    public void DownSpeed(float boostSpeed)
+    {
+        moveSpeed /= boostSpeed;
     }
 }

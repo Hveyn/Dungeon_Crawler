@@ -16,9 +16,11 @@ GameObject:
   - component: {fileID: 7696384232153513502}
   - component: {fileID: 7696384232153513475}
   - component: {fileID: 7696384232153513474}
+  - component: {fileID: -4396727289746133257}
+  - component: {fileID: -200280951792162115}
   m_Layer: 0
   m_Name: slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476801ebc4a078c489465a74e5f5ef10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  maxHealth: 5
 --- !u!114 &7696384232153513474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,8 +191,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db99b4382dff0e4c890837621ecca46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1343566499239819076, guid: d63e44a9ae5b368489526e98da25cdd1, type: 3}
+  player: {fileID: 5792868191073326091, guid: d63e44a9ae5b368489526e98da25cdd1, type: 3}
   touchDamage: 1
+--- !u!114 &-4396727289746133257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7696384232153513479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a4803c7518349348b04b2fed85e84a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-200280951792162115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7696384232153513479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39799735390d90429c9205f2252b875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItems:
+  - {fileID: 11400000, guid: 1c7ccfda1d6982d4481f81c4289deb28, type: 2}
+  - {fileID: 11400000, guid: 56e2b7a0e567210409b36da0ebce1476, type: 2}
+  - {fileID: 11400000, guid: 7416aa2f0dfe7f547a3a55cf1a678346, type: 2}
+  itemSpawn: {fileID: 7020699931585133587, guid: 187553c71d21cca4facc6e2740397619, type: 3}
+  randomTypeItems: 1
 --- !u!1 &7696384232404971234
 GameObject:
   m_ObjectHideFlags: 0

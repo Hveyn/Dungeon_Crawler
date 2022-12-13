@@ -19,7 +19,7 @@ MonoBehaviour:
   NearWallDown: 1
   NearWallRight: 1
   NearWallLeft: 1
-  Inner: 1
+  Inner: 0
   PlacementQuantityMin: 1
   PlacementQuantityMax: 1
   PlaceAsGroup: 1

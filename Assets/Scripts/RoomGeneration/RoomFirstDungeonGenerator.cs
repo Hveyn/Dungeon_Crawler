@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,25 +5,16 @@ using Random = UnityEngine.Random;
 
 public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
 {
-   [SerializeField]
-   private int minRoomWidth = 4, minRoomHeight = 4;
-   
-   [SerializeField]
-   private int dungeonWidth = 20, dungeonHeight = 20;
-   
-   [SerializeField]
-   [Range(0,10)]
-   private int offset = 1;
+   [SerializeField] 
+   private ParametrsRoomGeneration parametrsGeneration;
 
    [SerializeField]
-   private int spanCorridorConnect;
-
-   public UnityEvent onFinishedRoomGeneration;
+   private UnityEvent onFinishedRoomGeneration;
 
    private DungeonData _dungeonData;
    protected override void RunProceduralGeneration()
    {
-      _dungeonData = FindObjectOfType<DungeonData>();
+      _dungeonData = GetComponent<DungeonData>();
       if (_dungeonData == null) _dungeonData = gameObject.AddComponent<DungeonData>();
       CreateRooms();
    }
@@ -35,7 +25,8 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       _dungeonData.Reset();
       
       var roomsList = ProceduralGenerationAlgorithm.BinarySpacePartitioning(new BoundsInt((Vector3Int)startPosition,
-         new Vector3Int(dungeonWidth, dungeonHeight, 0)), minRoomWidth, minRoomHeight);
+         new Vector3Int(parametrsGeneration.dungeonWidth, parametrsGeneration.dungeonHeight, 0)), 
+                           parametrsGeneration.minRoomWidth, parametrsGeneration.minRoomHeight);
 
       HashSet<Vector2Int> floor= new HashSet<Vector2Int>();
       List<Vector2Int> roomCenters = new List<Vector2Int>();
@@ -70,7 +61,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
    private HashSet<Vector2Int> GenColiderFloor(HashSet<Vector2Int> floor)
    {
       BoundsInt coliderMap = new BoundsInt((Vector3Int)startPosition,
-         new Vector3Int(dungeonWidth, dungeonHeight, 0));
+         new Vector3Int(parametrsGeneration.dungeonWidth, parametrsGeneration.dungeonHeight, 0));
 
       HashSet<Vector2Int> coliderFloor = new HashSet<Vector2Int>();
       for (int i = 0; i < coliderMap.size.x; i++)
@@ -126,7 +117,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
          }
          
          parallelPosition = position;
-         parallelPosition += Vector2Int.right * spanCorridorConnect;
+         parallelPosition += Vector2Int.right * parametrsGeneration.corridorsWidth;
          
          corridor.Add(position);
          corridor.Add(parallelPosition);
@@ -145,7 +136,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
          }
          
          parallelPosition = position;
-         parallelPosition += Vector2Int.up * spanCorridorConnect;
+         parallelPosition += Vector2Int.up * parametrsGeneration.corridorsWidth;
          
          corridor.Add(position);
          corridor.Add(parallelPosition);
@@ -175,9 +166,9 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
    {
       HashSet<Vector2Int> floor = new HashSet<Vector2Int>();
 
-      for (int col = offset; col < room.size.x - offset; col++)
+      for (int col = parametrsGeneration.offset; col < room.size.x - parametrsGeneration.offset; col++)
       {
-         for (int row = offset; row < room.size.y - offset; row++)
+         for (int row = parametrsGeneration.offset; row < room.size.y - parametrsGeneration.offset; row++)
          {
             Vector2Int position = (Vector2Int)room.min + new Vector2Int(col, row);
             floor.Add(position);
