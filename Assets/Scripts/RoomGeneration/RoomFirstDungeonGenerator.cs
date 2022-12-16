@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
@@ -53,6 +54,7 @@ public class RoomFirstDungeonGenerator : AbstractDungeonGenerator
       tilemapVisualizer.PaintColiderFloorTiles(coliderFloor);
 
       onFinishedRoomGeneration?.Invoke();
+      //SceneTransition.AddLoadingProgress();
 
       Vector2 transferNextLevelPos = _dungeonData.Rooms[_dungeonData.Rooms.Count - 1].RoomCenterPos;
       tilemapVisualizer.PaintTransferTile(new Vector2Int((int)transferNextLevelPos.x,(int)transferNextLevelPos.y));

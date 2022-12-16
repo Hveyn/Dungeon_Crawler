@@ -16,6 +16,7 @@ public class PlayerInventory : MonoBehaviour
     
     private void Update()
     {
+        
         SpetificationsItem newItem = InventoryManager.Instance.GetSelectedItem(false);
         if (newItem != null)
         {

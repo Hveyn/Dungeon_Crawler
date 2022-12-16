@@ -73,6 +73,7 @@ public class RoomDataExtractor : MonoBehaviour
 
         _dungeonData.avgCountFloorTilesInRooms = countAllFloorTiles / _dungeonData.Rooms.Count;
         Invoke("RunEvent", 1);
+        //SceneTransition.AddLoadingProgress();
     }
 
     public void RunEvent()

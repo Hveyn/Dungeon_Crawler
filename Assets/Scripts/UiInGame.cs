@@ -33,7 +33,7 @@ public class UiInGame : MonoBehaviour
         Instance = this;
     }
 
-    private void Update()
+    private void Start()
     {
         UiInGame[] copyUi = FindObjectsOfType<UiInGame>();
         foreach (UiInGame copy in copyUi)
@@ -45,6 +45,11 @@ public class UiInGame : MonoBehaviour
                 Destroy(copy.gameObject);
             }
         }
+    }
+
+    private void Update()
+    {
+    
         player = GameObject.FindGameObjectWithTag("Player");
         StateHealthBar();
 

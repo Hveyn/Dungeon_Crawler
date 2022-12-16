@@ -45,6 +45,7 @@ public class InventoryManager : MonoBehaviour
     {
         _dungeonData = FindObjectOfType<DungeonData>();
         ChangedSelectedSlot(0);
+        Debug.Log("sel 0");
         GetSelectedItem(false);
         
         uiCountCoins.text = "0";

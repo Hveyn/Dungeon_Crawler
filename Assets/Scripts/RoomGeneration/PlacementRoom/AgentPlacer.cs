@@ -82,6 +82,8 @@ public class AgentPlacer : MonoBehaviour
             }
         }
         onFinished?.Invoke();
+        //SceneTransition.AddLoadingProgress();
+        //SceneTransition.SceneLoaded();
     }
 
     private void PlaceEnemies(Room room, int enemyCount)

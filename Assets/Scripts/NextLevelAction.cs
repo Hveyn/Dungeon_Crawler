@@ -32,7 +32,7 @@ public class NextLevelAction : MonoBehaviour
         {
             if (_indexActiveScene + 1 <= _countSceneInBuild - 1)
             {
-                SceneManager.Instance.LoadNextScene(_indexActiveScene+1);
+                SceneControl.Instance.LoadNextScene(_indexActiveScene+1);
             }
             else
             {

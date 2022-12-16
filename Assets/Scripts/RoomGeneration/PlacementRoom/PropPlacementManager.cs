@@ -92,6 +92,7 @@ public class PropPlacementManager : MonoBehaviour
         }
         navmesh.BuildNavMesh();
         onFinished?.Invoke();
+        //SceneTransition.AddLoadingProgress();
     }
 
     private void PlaceProps(Room room, List<Prop> wallProps, HashSet<Vector2Int> avaiableTiles, PlacementOriginCorner placement)
